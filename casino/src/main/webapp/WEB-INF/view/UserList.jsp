@@ -39,64 +39,63 @@
 
 	<div align="center" class="container">
 		<br>
-		<form>
+		<form method="post" action="/search">
 			<div class="m-4 p-4">
-				<div class="form-group row">
-					<label class="col-md-2 col-form-label">Name</label>
-					<div class="col-md-4">
-						<input type="text" class="form-control" path="name"
-							placeholder="Search By Name" />
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Name</label>
+						<div class="col-md-4">
+							<input type="text" class="form-control" name="name"
+								placeholder="Search By Name" />
+						</div>
+						<label class="col-md-2 col-form-label">Contact</label>
+						<div class="col-md-4">
+							<input type="number" class="form-control" name="contact" value=0
+								placeholder="Search By Contact" />
+						</div>
 					</div>
-					<label class="col-md-2 col-form-label">Contact</label>
-					<div class="col-md-4">
-						<input type="text" class="form-control" path="contact"
-							placeholder="Search By Contact" />
-					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-md-2 col-form-label">Email</label>
-					<div class="col-md-4">
-						<input type="text" class="form-control" path="email"
-							placeholder="Search By Email" />
-					</div>
-					<label class="col-md-2 col-form-label"></label>
-					<button type="submit" class="btn btn-primary mx-auto">Search</button>
-				</div>
-
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Email</label>
+						<div class="col-md-4">
+							<input type="text" class="form-control" name="email"
+								placeholder="Search By Email" />
+						</div>
+						<label class="col-md-2 col-form-label"></label>
+						<button type="submit" class="btn btn-primary mx-auto">Search</button>
 			</div>
-		</form>
+	</div>
+	</form>
 
 
 
-		<table class="table table-hover">
-			<thead>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">S.No</th>
+				<th scope="col">Name</th>
+				<th scope="col">DOB</th>
+				<th scope="col">Contact</th>
+				<th scope="col">Email</th>
+				<th scope="col">Balance(in Rs.)</th>
+				<th scope="col">Recharge</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="customer" items="${list}">
 				<tr>
-					<th scope="col">S.No</th>
-					<th scope="col">Name</th>
-					<th scope="col">DOB</th>
-					<th scope="col">Contact</th>
-					<th scope="col">Email</th>
-					<th scope="col">Balance(in Rs.)</th>
-					<th scope="col">Recharge</th>
+					<th scope="row">${customer.id}</th>
+					<td>${customer.name}</td>
+					<td>${customer.dob}</td>
+					<td>${customer.contact}</td>
+					<td>${customer.email}</td>
+					<td>${customer.total_bal}</td>
+					<td><button class="btn btn-outline-info p-2 open-modal"
+							data-toggle="modal" data-id="${customer.id}"
+							data-target="#rechargeModal">+</button></td>
 				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="customer" items="${list}">
-					<tr>
-						<th scope="row">${customer.id}</th>
-						<td>${customer.name}</td>
-						<td>${customer.dob}</td>
-						<td>${customer.contact}</td>
-						<td>${customer.email}</td>
-						<td>${customer.total_bal}</td>
-						<td><button
-									class="btn btn-outline-info p-2 open-modal" data-toggle="modal"
-									data-id="${customer.id}" data-target="#rechargeModal">+</button></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+			</c:forEach>
+		</tbody>
+	</table>
 	</div>
 
 	<!-- Modal -->
