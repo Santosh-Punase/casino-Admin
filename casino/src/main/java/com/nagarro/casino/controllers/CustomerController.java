@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +55,15 @@ public class CustomerController {
 			//if id==0 new customer otherwise update old one	
 		}
 		customerRepo.save(customer);
-		return new ModelAndView("redirect:/users");
+		return new ModelAndView("redirect:/user/register.html?success=true");
 	}
+	
+	@RequestMapping( value = "/recharge", method = RequestMethod.POST)
+    public ModelAndView doEdit(@RequestParam("id") int id, @RequestParam("ammount") int amt){
+		Customer customer = customerRepo.findOne(id);
+		customer.setTotal_bal(customer.getTotal_bal()+amt);
+		customerRepo.save(customer);
+        return new ModelAndView("redirect:/users");
+    }
+	
 }

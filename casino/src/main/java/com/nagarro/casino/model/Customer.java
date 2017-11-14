@@ -35,7 +35,7 @@ public class Customer {
 	private String email;
 	
 	@Column
-	private int total_bal;
+	private double total_bal;
 	
 	@Column
 	private int blocked_amt;
@@ -83,11 +83,11 @@ public class Customer {
 		this.email = email;
 	}
 
-	public int getTotal_bal() {
+	public double getTotal_bal() {
 		return total_bal;
 	}
 
-	public void setTotal_bal(int total_bal) {
+	public void setTotal_bal(double total_bal) {
 		this.total_bal = total_bal;
 	}
 
