@@ -12,5 +12,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer>{
 	
 	List<Customer> findByContact(long contact);
 	
+	Customer findByUniqId(String uniq_id);
+	
 	List<Customer> findByEmail(String email);
 }

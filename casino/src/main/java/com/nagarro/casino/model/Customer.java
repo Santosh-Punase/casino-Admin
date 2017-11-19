@@ -25,6 +25,11 @@ public class Customer {
 		super();
 	}
 
+	public Customer(int id) {
+		super();
+		this.id = id;		
+	}
+
 	@Column
 	private Date dob;
 	
@@ -41,7 +46,7 @@ public class Customer {
 	private int blocked_amt;
 	
 	@Column
-	private String uu_ID;
+	private String uniqId;
 
 	public int getId() {
 		return id;
@@ -99,12 +104,13 @@ public class Customer {
 		this.blocked_amt = blocked_amt;
 	}
 
-	public String getUu_ID() {
-		return uu_ID;
+
+	public String getUniq_id() {
+		return uniqId;
 	}
 
-	public void setUu_ID(String uu_ID) {
-		this.uu_ID = uu_ID;
-	}	
+	public void setUniq_id(String uniq_id) {
+		this.uniqId = uniq_id;
+	}
 }
 

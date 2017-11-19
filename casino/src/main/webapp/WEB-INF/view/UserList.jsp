@@ -114,7 +114,7 @@
 					<form method="post" action="/recharge">
 
 						Ammount: <input type="text" name="ammount" id="id-amt" val="" />
-						<input type="hidden" name="id" id="id" val="" />
+						<input type="hidden" name="id" id="id"  val="" />
 						<div class="modal-footer">
 							<input type="submit" class="btn btn-primary" value="Recharge" />
 						</div>
