@@ -1,0 +1,138 @@
+<nav class="navbar navbar-light bg-light" style="background-color: #e3f2fd">
+  <span class="navbar-brand mb-0 h1">Roulette</span>
+</nav>
+
+<div style="float: right">
+    <textarea class="welcome-box">
+      Welcome {{name}} !!
+      You have Rs {{currentBalance}}
+    </textarea>
+  <button class="exitbtn btn btn-danger" (click)="logout()" type="submit">exit</button>
+</div>
+
+
+<!--<button class="btn float-right"  (click)="logout()" type="submit">exit</button>-->
+<div class="container">
+  <div class="text-center" style="margin: 8vh">
+    <img src="/assets/roulette.jpeg" style="width: 40vw"/>
+  </div>
+
+  <form #betform="ngForm">
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>1st 12</td>
+        <td><input type="number" class="form-control" name="firstTwelvePosition" min="0" step="500" value="0"
+                   [(ngModel)]="firstTwelvePosition"/></td>
+        <td>2nd 12</td>
+        <td><input type="number" class="form-control" name="secondTwelvePosition" min="0" step="500" value="0"
+                   [(ngModel)]="secondTwelvePosition"/></td>
+        <td>3rd 12</td>
+        <td><input type="number" class="form-control" name="thirdTwelvePosition" min="0" step="500" value="0"
+                   [(ngModel)]="thirdTwelvePosition"/></td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td><input type="number" class="form-control" name="zerothPosition" min="0" step="500" value="0"
+                   [(ngModel)]="zerothPosition"/></td>
+        <td>1 to 18</td>
+        <td><input type="number" class="form-control" name="oneToEighteen" min="0" step="500" value="0"
+                   [(ngModel)]="oneToEighteen"/></td>
+        <td>19 to 36</td>
+        <td><input type="number" class="form-control" name="ninteenToThirtysix" min="0" step="500" value="0"
+                   [(ngModel)]="ninteenToThirtysix"/></td>
+      </tr>
+      <tr>
+        <td>Even</td>
+        <td><input type="number" class="form-control" name="evenPosition" min="0" step="500" value="0"
+                   [(ngModel)]="evenPosition"/></td>
+        <td>Odd</td>
+        <td><input type="number" class="form-control" name="oddPosition" min="0" step="500" value="0"
+                   [(ngModel)]="oddPosition"/></td>
+        <td></td>
+        <!--play button-->
+        <td>
+          <button class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#tryModal">Play</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+
+
+  <!-- Play Modal -->
+  <div class="modal fade" id="tryModal" tabindex="-1" role="dialog" aria-labelledby="tryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tryModalLabel">Try Your Luck</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure!!<p> you want to try your luck with your current selection...?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" (click)="submitBetForm(betform)" data-dismiss="modal">Sure!!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!--Angular:{{betform.value|json}}-->
+
+
+
+<!--INSUFFICIENT FUND SHOWING MODEL-->
+
+<div class="modal fade" id="errorModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>Sorry Dear !!! </p>
+        <p>You have insufficient balance for your selection ...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" (click)="resetSelection()" class="btn btn-primary" data-dismiss="modal">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--  BET RESULT  SHOWING MODEL-->
+
+<div class="modal fade" id="resultModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">You {{result}} !!!</h4>
+      </div>
+      <div class="modal-body">
+        The Roulette result is Number {{randomNumber}}
+        <p>You {{result}} Rs {{WinLossBetAmount}} !!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="logout()" class="btn btn-default" data-dismiss="modal">Exit</button>
+        <button type="button" (click)="resetAfterResult()" class="btn btn-primary" data-dismiss="modal">Play Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

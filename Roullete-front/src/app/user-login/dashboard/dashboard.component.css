@@ -1,0 +1,16 @@
+.welcome-box{
+  display: inline;
+  width: 200px;
+  height: 60px;
+  background-color: white;
+  margin-top: 5px;
+  overflow: hidden;
+}
+.exitbtn{
+ margin: 5px 20px;
+  float:right;
+}
+td{
+  border: none;
+}
+
