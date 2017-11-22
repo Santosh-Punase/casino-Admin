@@ -7,10 +7,10 @@ To run the casino server
 mvn spring-boot:run
 ```
 To run the roullete server
-```
 
 ## Roulette-game
 
+```
 mvn spring-boot:run
 ```
 
