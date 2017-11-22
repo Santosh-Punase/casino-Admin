@@ -4,7 +4,7 @@
 
 To run the casino server
 ```
-mvn spring-boot:run
+$ mvn spring-boot:run
 ```
 
 ## Roulette-game
@@ -13,10 +13,11 @@ To run the roullete server
 
 
 ```
-mvn spring-boot:run
+$ mvn spring-boot:run
 ```
 
 To compile the angular code and create bundle
 ```
-ng serve
+$ npm install
+$ ng serve
 ```
