@@ -24,7 +24,7 @@ import com.nagarro.casino.model.Customer;
 import com.nagarro.casino.repository.CustomerRepo;
 
 @Controller
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/")
 public class CustomerController {
@@ -48,17 +48,6 @@ public class CustomerController {
 		return model;
 	}
 
-	@RequestMapping(value = "/user/{u_id}", method = RequestMethod.GET)
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Customer getCustomer(@PathVariable("u_id") String u_id) {
-		Customer customer = new Customer();
-		customer = customerRepo.findByUniqId(u_id);
-		if (null != customer)
-			return customer;
-		return new Customer();
-	}
-
 	@RequestMapping(value = "/user/save", method = RequestMethod.POST)
 	public ModelAndView saveCustomer(@RequestParam("name") String name, @RequestParam("dob") Date dob,
 			@RequestParam("contact") long contact, @RequestParam("email") String email) {
@@ -77,14 +66,6 @@ public class CustomerController {
 		return new ModelAndView("redirect:/user/register.html?success=true");
 	}
 
-	@RequestMapping(value = "/recharge", method = RequestMethod.POST)
-	public ModelAndView doEdit(@RequestParam("id") int id, @RequestParam("ammount") int amt) {
-		Customer customer = customerRepo.findOne(id);
-		customer.setTotal_bal(customer.getTotal_bal() + amt);
-		customerRepo.save(customer);
-		return new ModelAndView("redirect:/users");
-	}
-
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView doEdit(@RequestParam("name") String name, @RequestParam("contact") long contact,
@@ -93,7 +74,7 @@ public class CustomerController {
 
 		if (name != "")
 			userList.addObject("list", customerRepo.findByName(name));
-		else if (email != "")
+		if (email != "")
 			userList.addObject("list", customerRepo.findByEmail(email));
 		else if (contact != 0)
 			userList.addObject("list", customerRepo.findByContact(contact));
@@ -103,4 +84,49 @@ public class CustomerController {
 		return userList;
 	}
 
+	@RequestMapping(value = "/recharge", method = RequestMethod.POST)
+	public ModelAndView doEdit(@RequestParam("id") int id, @RequestParam("ammount") int amt) {
+		Customer customer = customerRepo.findOne(id);
+		customer.setTotal_bal(customer.getTotal_bal() + amt);
+		customerRepo.save(customer);
+		return new ModelAndView("redirect:/users");
+	}
+
+	// **********************Rest end points for roullete
+	// client**************************
+
+	@RequestMapping(value = "/user/{u_id}", method = RequestMethod.GET)
+	@ResponseBody
+	// @Produces({ MediaType.APPLICATION_JSON })
+	public Customer getCustomer(@PathVariable("u_id") String u_id) {
+		Customer customer = new Customer();
+		customer = customerRepo.findByUniqId(u_id);
+		if (null != customer)
+			return customer;
+		return new Customer();
+	}
+
+	@RequestMapping(value = "/play/{id}/{blockedAmt}", method = RequestMethod.GET)
+	@ResponseBody
+	public Customer playCustomer(@PathVariable("id") String uid, @PathVariable("blockedAmt") int blockedAmt) {
+		Customer customer = new Customer();
+		customer = customerRepo.findByUniqId(uid);
+		customer.setBlocked_amt(blockedAmt);
+		customer.setTotal_bal(customer.getTotal_bal() - blockedAmt);
+		customerRepo.save(customer);
+		return customer;
+	}
+
+	@RequestMapping(value = "/settle/{id}/{blockedAmt}/{prizeAmt}", method = RequestMethod.GET)
+	@ResponseBody
+	public Customer updateCustomer(@PathVariable("id") String uid, @PathVariable("blockedAmt") int blockedAmt,
+			@PathVariable("prizeAmt") int prizeAmt) {
+		Customer customer = new Customer();
+		customer = customerRepo.findByUniqId(uid);
+		customer.setBlocked_amt(customer.getBlocked_amt() - blockedAmt);
+		if (prizeAmt != 0)
+			customer.setTotal_bal(customer.getTotal_bal() + prizeAmt);
+		customerRepo.save(customer);
+		return customer;
+	}
 }
